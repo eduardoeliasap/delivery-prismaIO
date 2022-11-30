@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express'
 import "express-async-errors";
+import { EnsureAuthenticateClient } from './middlewares/ensure-authenticate-client';
 import { routes } from './routes'
 
 const app = express();
@@ -20,7 +21,7 @@ app.use((err: Error, request: Request, response: Response, next: NextFunction) =
     })
 })
 
-app.get("/", (request, response: Response) => {
+app.get("/", EnsureAuthenticateClient, (request, response: Response) => {
     return response.json({
         message: "Hello world"
     })
